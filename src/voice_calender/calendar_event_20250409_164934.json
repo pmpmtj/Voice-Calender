@@ -1,0 +1,9 @@
+{
+  "title": "Google Calendar Event",
+  "description": "Schema for the most commonly used fields when creating an event via the Google Calendar API",
+  "summary": "Hairdresser Appointment",
+  "start": {
+    "dateTime": "2025-04-09T20:00:00+01:00",
+    "timeZone": "Europe/Lisbon"
+  }
+}

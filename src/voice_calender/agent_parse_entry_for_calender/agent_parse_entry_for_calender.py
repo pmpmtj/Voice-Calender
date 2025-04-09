@@ -629,7 +629,6 @@ def parse_calendar_entries():
     
     # Process each transcription file
     success_count = 0
-    db_success_count = 0
     
     for file_path in transcription_files:
         logger.info(f"Processing transcription file: {file_path}")
@@ -660,13 +659,14 @@ def parse_calendar_entries():
                 logger.info(f"Successfully processed {file_path} and saved to {output_file}")
                 success_count += 1
                 
-                # Save to database
-                event_id = save_to_database(json_object)
-                if event_id:
-                    db_success_count += 1
-                    logger.info(f"Event saved to database with ID: {event_id}")
-                else:
-                    logger.warning(f"Failed to save event to database for {file_path}")
+                # Comment out database save to prevent duplicate entries
+                # This is now handled by app_calender_scheduler.py when processing JSON files
+                # event_id = save_to_database(json_object)
+                # if event_id:
+                #     db_success_count += 1
+                #     logger.info(f"Event saved to database with ID: {event_id}")
+                # else:
+                #     logger.warning(f"Failed to save event to database for {file_path}")
             else:
                 logger.warning(f"Failed to save output for {file_path}")
             
@@ -681,7 +681,6 @@ def parse_calendar_entries():
     
     if success_count > 0:
         logger.info(f"Successfully processed {success_count} of {len(transcription_files)} transcription files")
-        logger.info(f"Successfully saved {db_success_count} events to the database")
         return True
     else:
         logger.warning("No transcription files were successfully processed")
