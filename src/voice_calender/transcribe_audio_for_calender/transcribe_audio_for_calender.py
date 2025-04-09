@@ -125,16 +125,19 @@ logger.info(f"Logging to {log_path}")
 def get_openai_client():
     """Get the OpenAI client."""
     try:
-        # Create the OpenAI client
-        client = OpenAI()
+        # Get the API key from environment variable
+        api_key = os.environ.get("OPENAI_API_KEY")
         
-        # Check if API key is set
-        if not client.api_key:
-            logger.error("OpenAI API key not found. Make sure it's set in the environment variables.")
+        if not api_key:
+            logger.error("OPENAI_API_KEY environment variable not set")
+            logger.error("Please set the OPENAI_API_KEY environment variable with your OpenAI API key")
             sys.exit(1)
             
+        # Create OpenAI client
+        client = OpenAI(api_key=api_key)
         logger.info("OpenAI client initialized")
         return client
+        
     except Exception as e:
         logger.error(f"Error creating OpenAI client: {str(e)}")
         traceback.print_exc()
@@ -216,7 +219,9 @@ def calculate_duration(file_path):
             return None
     except Exception as e:
         logger.error(f"Error calculating audio duration: {str(e)}")
-        return None
+        # Fallback: use file size as a very rough estimate (3MB ≈ 1 minute)
+        file_size = os.path.getsize(file_path)
+        return (file_size / (3 * 1024 * 1024)) * 60  # Convert to seconds
 
 
 def get_transcription_model():
@@ -507,15 +512,15 @@ def run_transcribe():
         success = process_audio_files(client, audio_files, output_dir, output_file)
         
         if success:
-            logger.info("Audio transcription completed successfully")
+            logger.info("Transcription process completed successfully")
         else:
-            logger.warning("No transcriptions were generated")
+            logger.warning("Transcription process completed with warnings")
             
         return success
     except Exception as e:
-        logger.error(f"Error in transcription process: {str(e)}")
+        logger.error(f"Error running transcription process: {str(e)}")
         traceback.print_exc()
-        return False
+        sys.exit(1)
 
 
 if __name__ == "__main__":

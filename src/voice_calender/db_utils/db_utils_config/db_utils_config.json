@@ -6,6 +6,6 @@
         "max_size_bytes": 1048576,
         "backup_count": 3
     },
-    "calender_date_interval": ["2025-04-08","2025-04-08"],
+    "calender_date_interval": [],
     "query_limit": 100
 } 

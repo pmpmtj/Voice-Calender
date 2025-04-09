@@ -1,8 +1,8 @@
 {
     "scheduler": {
       "runs_per_day": 4,
-      "daily_task_hour": 14,
-      "daily_task_minute": 21
+      "daily_task_hour": 11,
+      "daily_task_minute": 49
     },
     "file_processing": {
       "archive_processed_files": true,
