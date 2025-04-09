@@ -52,7 +52,7 @@ def create_tables():
         conn = get_connection()
         cur = conn.cursor()
         
-        # Create calendar_events table
+        # Create calendar_events table with relaxed constraints
         cur.execute("""
         CREATE TABLE IF NOT EXISTS calendar_events (
             id SERIAL PRIMARY KEY,
@@ -69,13 +69,24 @@ def create_tables():
             visibility TEXT,
             colorId TEXT,
             transparency TEXT,
-            status TEXT
+            status TEXT,
+            created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
         )
         """)
         
         # Create index on calendar_events.start_dateTime for faster date-based queries
         cur.execute("""
         CREATE INDEX IF NOT EXISTS idx_calendar_events_start_datetime ON calendar_events(start_dateTime)
+        """)
+        
+        # Add index on calendar_events.end_dateTime for faster range queries
+        cur.execute("""
+        CREATE INDEX IF NOT EXISTS idx_calendar_events_end_datetime ON calendar_events(end_dateTime)
+        """)
+        
+        # Create a composite index for date range queries
+        cur.execute("""
+        CREATE INDEX IF NOT EXISTS idx_calendar_events_date_range ON calendar_events(start_dateTime, end_dateTime)
         """)
         
         conn.commit()
@@ -139,6 +150,10 @@ def save_calendar_event(summary, start_datetime, end_datetime, location=None, de
     try:
         conn = get_connection()
         cur = conn.cursor()
+        
+        # The database now expects timestamp values
+        # If inputs are ISO strings, psycopg2 will handle the conversion
+        # If they're already datetime objects, they'll work as is
         
         # Insert event
         cur.execute("""
@@ -276,12 +291,12 @@ def get_calendar_events_by_config_interval():
         # Get the query limit from config (default to 100 if not specified)
         query_limit = config.get('query_limit', 100)
         
-        # Ensure dates have the right format for comparison
+        # Ensure dates have the right format for comparison with TIMESTAMP fields
         # If only dates are specified (no time), append start/end of day time
-        if len(start_date) == 10:  # YYYY-MM-DD format
+        if isinstance(start_date, str) and len(start_date) == 10:  # YYYY-MM-DD format
             start_date = f"{start_date}T00:00:00"
         
-        if len(end_date) == 10:  # YYYY-MM-DD format
+        if isinstance(end_date, str) and len(end_date) == 10:  # YYYY-MM-DD format
             end_date = f"{end_date}T23:59:59"
         
         # Get the database connection
@@ -289,6 +304,7 @@ def get_calendar_events_by_config_interval():
         cur = conn.cursor(cursor_factory=RealDictCursor)
         
         # Query events within the date range
+        # psycopg2 will handle the conversion of ISO strings to proper timestamp values
         cur.execute("""
         SELECT *
         FROM calendar_events

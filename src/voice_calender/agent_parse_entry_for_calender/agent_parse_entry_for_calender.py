@@ -28,6 +28,7 @@ from voice_calender.db_utils.db_manager import (
     save_calendar_event,
     close_all_connections
 )
+from voice_calender.db_utils.save_event_helper import save_event_flexible
 
 # Initialize paths - handling both frozen (PyInstaller) and regular Python execution
 if getattr(sys, 'frozen', False):
@@ -565,61 +566,8 @@ def save_to_database(event_data):
         int: Database record ID if successful, None otherwise
     """
     try:
-        # Extract event fields from the event_data dictionary
-        summary = event_data.get('summary')
-        if not summary:
-            logger.error("Event data missing required 'summary' field")
-            return None
-            
-        # Extract start date/time information
-        start_data = event_data.get('start', {})
-        start_datetime = start_data.get('dateTime') or start_data.get('date')
-        if not start_datetime:
-            logger.error("Event data missing required start date/time information")
-            return None
-            
-        # Extract timezone information from start data
-        start_timezone = start_data.get('timeZone')
-        
-        # Extract end date/time information
-        end_data = event_data.get('end', {})
-        end_datetime = end_data.get('dateTime') or end_data.get('date')
-        end_timezone = end_data.get('timeZone')
-        
-        # If end is not specified, use start date/time as fallback
-        if not end_datetime:
-            logger.warning("End date/time not specified, using start date/time as fallback")
-            end_datetime = start_datetime
-            end_timezone = start_timezone
-            
-        # Extract other optional fields
-        location = event_data.get('location')
-        description = event_data.get('description')
-        attendees = event_data.get('attendees')
-        recurrence = event_data.get('recurrence')
-        reminders = event_data.get('reminders')
-        visibility = event_data.get('visibility')
-        color_id = event_data.get('colorId')
-        transparency = event_data.get('transparency')
-        status = event_data.get('status')
-        
-        # Save the event to the database
-        event_id = save_calendar_event(
-            summary=summary,
-            start_datetime=start_datetime,
-            end_datetime=end_datetime,
-            location=location,
-            description=description,
-            start_timezone=start_timezone,
-            end_timezone=end_timezone,
-            attendees=attendees,
-            recurrence=recurrence,
-            reminders=reminders,
-            visibility=visibility,
-            color_id=color_id,
-            transparency=transparency,
-            status=status
-        )
+        # Use the flexible event saving helper
+        event_id = save_event_flexible(event_data)
         
         if event_id:
             logger.info(f"Successfully saved calendar event to database with ID: {event_id}")

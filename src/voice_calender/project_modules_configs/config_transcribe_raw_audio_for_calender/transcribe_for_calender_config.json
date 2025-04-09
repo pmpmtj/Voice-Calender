@@ -2,7 +2,7 @@
   "logging": {
   "level": "INFO",
   "format": "%(asctime)s - %(levelname)s - %(message)s",
-  "log_file": "transcribe_audio_for_accounts.log",
+  "log_file": "transcribe_audio_for_calender.log",
   "max_size_bytes": 1048576,
   "backup_count": 3
 },
