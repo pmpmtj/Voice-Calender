@@ -1,0 +1,71 @@
+{
+    "api": {
+      "scopes": [
+        "https://www.googleapis.com/auth/drive"
+      ]
+    },
+    "auth": {
+      "credentials_file": "gdrive_credentials.json",
+      "token_file": "gdrive_token.pickle"
+    },
+    "credentials_path": "C:/Users/pmpmt/voice_calender_app/gdrive_credentials/gdrive_credentials.json",
+    "folders": {
+      "target_folders": [
+        "calender"
+      ]
+    },
+    "audio_file_types": {
+      "include": [
+        ".mp3",
+        ".wav",
+        ".m4a",
+        ".flac",
+        ".aac",
+        ".ogg",
+        ".wma"
+      ]
+    },
+    "image_file_types": {
+      "include": [
+        ".jpg",
+        ".png",
+        ".gif",
+        ".jpeg",
+        ".bmp",
+        ".tiff",
+        ".ico",
+        ".webp"
+      ]
+    },
+    "video_file_types": {
+      "include": [
+        ".mp4",
+        ".avi", 
+        ".mov",
+        ".wmv",
+        ".flv",
+        ".webm",
+        ".mkv"
+      ]
+    },
+    "sorting": {
+      "sort_by": "createdTime",
+      "sort_order": "asc"
+    },
+    "download": {
+      "add_timestamps": true,
+      "timestamp_format": "%Y%m%d_%H%M%S_%f",
+      "delete_after_download": true
+    },
+    "downloads_path": {
+      "downloads_dir": "C:/Users/pmpmt/voice_calender_app/dwnload_files/downloads"
+    },
+    "logging": {
+        "level": "INFO",
+        "format": "%(asctime)s - %(levelname)s - %(message)s",
+        "log_file": "dwnld_files.log",
+        "max_size_bytes": 1048576,
+        "backup_count": 3
+    },
+    "dry_run": false
+}

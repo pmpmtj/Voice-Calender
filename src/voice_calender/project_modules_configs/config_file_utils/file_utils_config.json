@@ -1,0 +1,21 @@
+{
+    "source_directories_files_to_delete": {
+        "audio_files_dir": "C:/Users/pmpmt/voice_calender_app/dwnload_files/downloads",
+        "json_files_dir": "C:/Users/pmpmt/voice_calender_app/parsed_entry/json_output/processed",
+        "video_files_dir": "C:/Users/pmpmt/voice_calender_app/transcribe_raw_audio/transcriptions"
+    },
+    "audio_file_types": {
+        "enabled": true
+    },
+    "logging": {
+        "level": "INFO",
+        "format": "%(asctime)s - %(levelname)s - %(message)s",
+        "log_file": "file_utils.log",
+        "max_size_bytes": 1048576,
+        "backup_count": 3
+    },
+    "processing": {
+        "create_directories_if_not_exist": true,
+        "delete_source_files": false
+    }
+} 

@@ -1,0 +1,32 @@
+{
+  "models": {
+    "whisper-1": {
+      "enabled": true,
+      "description": "Original Whisper model, good general-purpose speech to text",
+      "prompt": "Transcribe the given audio into english, extract financial information like amounts, dates, account names, and transaction types.",
+      "supports_language_parameter": true
+    },
+    "gpt-4o-transcribe": {
+      "enabled": false,
+      "description": "Advanced model with better accuracy but higher cost",
+      "prompt": "Transcribe the given audio into english, extract financial information like amounts, dates, account names, and transaction types.",
+      "supports_language_parameter": false
+    },
+    "gpt-4o-mini-transcribe": {
+      "enabled": false,
+      "description": "Smaller model with good performance for shorter audio",
+      "prompt": "Transcribe the given audio into english, extract financial information like amounts, dates, account names, and transaction types.",
+      "supports_language_parameter": false
+    }
+  },
+  "default_model": "whisper-1",
+  "settings": {
+    "language": "en",
+    "prompt": "Transcribe the given audio into english, extract financial information like amounts, dates, account names, and transaction types.",
+    "response_format": "json"
+  },
+  "cost_management": {
+    "max_audio_duration_seconds": 600,
+    "warn_on_large_files": true
+  }
+}

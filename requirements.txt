@@ -1,0 +1,9 @@
+google-auth
+google-auth-oauthlib==1.2.0 
+google-api-python-client
+python-dotenv
+psycopg2-binary
+pytest
+pytest-mock
+openai>=1.14.0
+pyyaml

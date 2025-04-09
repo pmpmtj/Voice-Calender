@@ -1,0 +1,16 @@
+{
+    "paths": {
+      "json_output_directory": "C:/Users/pmpmt/voice_calender_app/parsed_entry/json_output"
+    },
+    "logging": {
+      "log_level": "INFO",
+      "parse_entry_log_file": "parse_entry.log",
+      "parse_entry_max_size_bytes": 1048576,
+      "parse_entry_backup_count": 3
+    },
+    "output": {
+      "date_format": "%Y-%m-%d"
+    },
+    "date_range": [],
+    "allow_summary_overwrite": true
+}

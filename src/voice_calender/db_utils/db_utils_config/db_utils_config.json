@@ -1,0 +1,11 @@
+{
+    "logging": {
+        "level": "INFO",
+        "format": "%(asctime)s - %(levelname)s - %(message)s",
+        "log_file": "db_utils.log",
+        "max_size_bytes": 1048576,
+        "backup_count": 3
+    },
+    "calender_date_interval": ["2025-04-08","2025-04-08"],
+    "query_limit": 100
+} 
